@@ -1,101 +1,100 @@
 # 团队 Agent 插件市场
 
-团队所有 Agent 插件的统一入口。用户只添加一次本仓库地址，就能在 Codex、ZCode、HuiMate、Claude Code 里看到并安装下面的插件。以后新增插件，在本仓库登记一行，用户刷新市场就能看到，不用再添加新地址。
+团队 AI 研发插件的统一安装源，支持 **Claude Code**、**Codex**、**ZCode** 和 **HuiMate**。只需添加一次本市场，即可按需安装和更新团队标准插件。
 
-本仓库只放市场清单，不放插件内容；每个插件在自己的仓库里维护和发版。
+## 可用插件
 
-## 插件
+| 插件标识 | 功能简介 | 前置依赖 | 源码仓库 |
+| :--- | :--- | :--- | :--- |
+| `team-standards` | 团队编码规范与 Git 分支、提交、推送门禁 | 无 | [team-agent-skills](https://github.com/LinYang-github/team-agent-skills) (`develop`) |
+| `codespec` | 基于 OpenSpec 的研发流：探索 → 提案 → 实现 → 测试 → 归档 | 需全局安装 `codespec` CLI | [CodeSpec](https://github.com/LinYang-github/CodeSpec) (`codespec-plugin`) |
 
-| 插件 | 用途 | 插件仓库 | 分支 |
-| --- | --- | --- | --- |
-| `team-standards` | 团队编码规范与 Git 分支、提交和推送门禁 | [team-agent-skills](https://github.com/LinYang-github/team-agent-skills) | `develop` |
-| `codespec` | 基于 OpenSpec 的开发流程：探索 → 立提案 → 实现 → 测试 → 归档 | [CodeSpec](https://github.com/LinYang-github/CodeSpec) | `codespec-plugin` |
+## 快速开始
 
-安装标识为 `<插件名>@team-agent-marketplace`。各插件自己的前置依赖见插件仓库的 README，例如 `codespec` 还要全局安装 codespec 命令行。
+> **前置要求**：请确保本地 Git 已配置好 SSH Key 或访问凭据，且拥有**本仓库及对应插件源码仓库**的读取权限（安装时工具会自动拉取对应插件仓库）。
 
-## 前置条件
+默认使用 HTTPS 地址 `https://github.com/WuFuxiu/team-agent-marketplace.git`（若使用 SSH，可替换为 `git@github.com:WuFuxiu/team-agent-marketplace.git`，勿加 `ssh://`）。
 
-- Git 能访问**本仓库和每个插件仓库**。安装时工具会按清单里的地址去克隆插件仓库，只有本仓库的权限不够。
-- 凭据或 SSH key 提前配好。添加市场时不会弹出登录框。
+### 1. Claude Code
 
-下文的 `<市场地址>` 是本仓库的 Git 地址，分支为 `main`。HTTPS 地址保留结尾的 `.git`；SSH 地址用 `git@host:group/repo.git` 形式，不要用 `ssh://`。
-
-## 添加市场并安装插件
-
-**Codex**
-
-```bash
-codex plugin marketplace add <市场地址> --ref main
-codex plugin add <插件名>@team-agent-marketplace
-```
-
-也可以在 Codex 里输入 `/plugins`，从"团队 Agent 插件市场"安装。装完新建会话。
-
-**ZCode**
-
-桌面端：设置 → 插件 → 右上角「创建」→「添加插件市场」，填 `<市场地址>#main`，添加后在插件列表中安装，再新建会话。
-
-命令行（需要单独安装的 `zcode` CLI）：
-
-```bash
-zcode plugins marketplace add "<市场地址>#main"
-zcode plugins install <插件名>@team-agent-marketplace
-```
-
-**HuiMate**
-
-侧栏「专家 · 技能 · 连接器」→「插件」→「添加源」：类型选 Git 仓库，地址填 `<市场地址>`，分支填 `main`。保存后在插件列表中安装，再新建会话。
-
-**Claude Code**
+在交互终端中依次执行：
 
 ```text
-/plugin marketplace add <市场地址>#main
+/plugin marketplace add https://github.com/WuFuxiu/team-agent-marketplace.git#main
 /plugin install <插件名>@team-agent-marketplace
 ```
 
-## 更新
+### 2. Codex
 
-清单条目不写版本号：插件发版时本仓库不用改，执行更新就会重新取插件仓库对应分支的最新内容。代价是 ZCode 不会提示"有可用更新"，要自己定期执行更新。
+在终端执行命令（或在会话中输入 `/plugins` 从图形列表安装）：
 
-| 工具 | 怎么更新 |
-| --- | --- |
-| Codex | 每次新建会话自动同步市场和插件；也可以手动执行 `codex plugin marketplace upgrade team-agent-marketplace` |
-| ZCode | `zcode plugins marketplace update team-agent-marketplace`，再 `zcode plugins update <插件名>@team-agent-marketplace`，然后新建会话。`marketplace update` 要带市场名，不带时会刷新全部市场，任一外部市场超时都会让命令失败 |
-| HuiMate | 「插件」页点「刷新全部」，再对插件点「安装」并确认新旧版本；只刷新不会替换已安装的版本 |
-| Claude Code | 自建市场默认不自动更新：`/plugin marketplace update team-agent-marketplace`，再更新插件 |
+```bash
+codex plugin marketplace add https://github.com/WuFuxiu/team-agent-marketplace.git --ref main
+codex plugin add <插件名>@team-agent-marketplace
+```
 
-## 从旧地址迁移
+### 3. ZCode
 
-以前直接把 team-agent-skills 仓库添加为市场的，先卸载 `team-standards@team-agent-skills`、移除 `team-agent-skills` 市场，再按上文添加本市场、安装 `team-standards@team-agent-marketplace`。同一个插件从两个市场各装一份，同一套 skill 会加载两次。
+- **桌面端**：`设置` → `插件` → 右上角 `创建` → `添加插件市场`，填入 `https://github.com/WuFuxiu/team-agent-marketplace.git#main` → 在插件列表中点击安装。
+- **命令行**（需安装 `zcode` CLI）：
+  ```bash
+  zcode plugins marketplace add "https://github.com/WuFuxiu/team-agent-marketplace.git#main"
+  zcode plugins install <插件名>@team-agent-marketplace
+  ```
 
-## 登记新插件
+### 4. HuiMate
 
-1. 插件仓库根目录要有 `.claude-plugin/plugin.json`、`.codex-plugin/plugin.json` 和 `skills/`，格式参照 team-agent-skills。插件仓库自己不放 `marketplace.json`，用户只从本市场安装。
-2. 在本仓库的两个清单里各加一条，`name`、`url`、`ref` 两处一致，`name` 与插件 `plugin.json` 的 `name` 一致，不写 `version`：
-   - `.claude-plugin/marketplace.json`：Claude Code、ZCode、HuiMate 读取；
-   - `.agents/plugins/marketplace.json`：Codex 读取，另带 `policy` 和 `category`。
+侧边栏进入 `专家 · 技能 · 连接器` → `插件` → `添加源`：
+- **类型**：Git 仓库
+- **地址**：`https://github.com/WuFuxiu/team-agent-marketplace.git`
+- **分支**：`main`
 
-   ```json
-   {
-     "name": "<插件名>",
-     "source": {
-       "source": "url",
-       "url": "https://<Git 服务器>/<组>/<插件仓库>.git",
-       "ref": "<分支>"
-     }
-   }
-   ```
+保存后在插件列表中点击安装。
 
-3. 确认使用者对插件仓库有读取权限。
-4. 在四个工具里各装一次，确认能用后再合入。
+> **提示**：所有工具在安装或更新插件后，建议**新建会话**以使插件生效。
 
-从清单里删掉一条，不会自动卸载已经装上的插件，要通知用户自己卸载。
+## 更新插件
 
-## 内网
+当插件发布新版本时，按以下方式同步最新内容：
 
-内网另建一份本仓库，把两个清单里的仓库地址换成内网 GitLab 地址，其余不变。内网和外网的清单不能共用。
+| 工具 | 更新方式 |
+| :--- | :--- |
+| **Claude Code** | 执行 `/plugin marketplace update team-agent-marketplace`，随后更新对应插件 |
+| **Codex** | 新建会话时自动同步；或手动执行 `codex plugin marketplace upgrade team-agent-marketplace` |
+| **ZCode** | 先更新市场：`zcode plugins marketplace update team-agent-marketplace`<br>再更新插件：`zcode plugins update <插件名>@team-agent-marketplace` |
+| **HuiMate** | 在「插件」页点击「刷新全部」，再对目标插件点击「安装」以覆盖旧版本 |
 
-## 正式启用前待验证
+## 维护者指南：如何上架新插件
 
-- 引用其他仓库的写法（`"source": "url"` 加 `ref`）：Codex 已按源码确认、Claude Code 官方支持、ZCode 代码支持，HuiMate 还没验证。推广前在四个工具里各装一次。
-- `codespec` 的 `codespec-plugin` 分支推送到远端之前，这一条装不上。
+<details>
+<summary>点击展开插件登记与内网同步规范（仅市场维护者需关注）</summary>
+
+### 1. 插件仓库结构要求
+插件源码独立维护在各自仓库中，根目录需包含：
+- `.claude-plugin/plugin.json`
+- `.codex-plugin/plugin.json`
+- `skills/` 目录（结构可参考 `team-agent-skills`）
+
+*注：独立插件仓库内不要放置 `marketplace.json`。*
+
+### 2. 在本仓库登记清单
+同时修改以下两个清单文件，保持 `name`、`url`、`ref` 一致（`name` 需与插件内的 `plugin.json` 一致，无需填写 `version`）：
+- [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json)（供 Claude Code、ZCode、HuiMate 读取）
+- [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json)（供 Codex 读取，需额外包含 `policy` 与 `category` 字段）
+
+配置示例：
+```json
+{
+  "name": "<插件名>",
+  "source": {
+    "source": "url",
+    "url": "https://<Git服务器>/<组>/<插件仓库>.git",
+    "ref": "<分支>"
+  }
+}
+```
+
+### 3. 内网镜像维护
+内网环境需独立部署本仓库镜像，将两个 `marketplace.json` 中的 `url` 替换为内网 GitLab 仓库地址即可，其余结构保持不变。
+
+</details>
