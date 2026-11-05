@@ -15,7 +15,13 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Developer Tools"
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Team Standards",
+        "shortDescription": "团队编码规范与 Git 分支、提交和推送门禁",
+        "developerName": "Team",
+        "websiteURL": "https://github.com/LinYang-github/team-agent-skills/tree/develop"
+      }
     },
     {
       "name": "codespec",
@@ -28,7 +34,14 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Developer Tools"
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "CodeSpec",
+        "shortDescription": "基于 OpenSpec 的公司 AI 开发工作流：探索 → 立提案 → 实现 → 测试 → 归档",
+        "longDescription": "包含 6 个 skill：codespec-explore、codespec-propose、codespec-apply、codespec-test、codespec-archive、codespec-regress。插件只提供 skills，codespec 命令行需要另外全局安装同版本；项目里用 codespec init --tools <工具> --plugin 初始化。",
+        "developerName": "CodeSpec",
+        "websiteURL": "https://github.com/LinYang-github/CodeSpec/tree/codespec-tool"
+      }
     }
   ]
 }

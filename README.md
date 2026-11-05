@@ -80,7 +80,7 @@ codex plugin add <插件名>@team-agent-marketplace
 ### 2. 在本仓库登记清单
 同时修改以下两个清单文件，保持 `name`、`url`、`ref` 一致（`name` 需与插件内的 `plugin.json` 一致，无需填写 `version`）：
 - [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json)（供 Claude Code、ZCode、HuiMate 读取）
-- [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json)（供 Codex 读取，需额外包含 `policy` 与 `category` 字段）
+- [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json)（供 Codex 读取，需额外包含 `policy`、`category` 与 `interface` 字段。Codex 安装前不读取插件仓库，详情页只显示 `interface` 中的显示名、简介、开发者和网站）
 
 配置示例：
 ```json
