@@ -64,6 +64,20 @@ codex plugin add <插件名>@team-agent-marketplace
 | **ZCode** | 先更新市场：`zcode plugins marketplace update team-agent-marketplace`<br>再更新插件：`zcode plugins update <插件名>@team-agent-marketplace` |
 | **HuiMate** | 在「插件」页点击「刷新全部」，再对目标插件点击「安装」以覆盖旧版本 |
 
+## 离线打包与安装（无网/单机环境）
+
+针对完全断网且无内网 Git 服务器的单机环境，可使用跨平台脚本 [scripts/pack-offline.mjs](scripts/pack-offline.mjs)（支持 Windows / macOS / Linux，仅需 Node.js 与 Git）在有网环境一键构建包含所有插件源码的离线市场包：
+
+```bash
+# 默认在 ./dist 下生成离线目录与 team-agent-marketplace-offline.zip
+node scripts/pack-offline.mjs
+
+# 可选参数：指定输出目录或 tar.gz 格式
+node scripts/pack-offline.mjs --output ./release --format tar.gz
+```
+
+将生成的压缩包拷贝至离线机器并解压到固定目录（如 `/opt/team-agent-marketplace-offline` 或 `C:\opt\team-agent-marketplace-offline`），即可按解压目录内的 `README.md` 离线添加本地市场并安装插件（例如 Codex 执行 `codex plugin marketplace add /opt/team-agent-marketplace-offline`）。
+
 ## 维护者指南：如何上架新插件
 
 <details>
