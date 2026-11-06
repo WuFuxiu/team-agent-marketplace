@@ -4,10 +4,10 @@
 
 ## 可用插件
 
-| 插件标识 | 功能简介 | 前置依赖 | 源码仓库 |
-| :--- | :--- | :--- | :--- |
-| `team-standards` | 团队编码规范与 Git 分支、提交、推送门禁 | 无 | [team-agent-skills](https://github.com/LinYang-github/team-agent-skills) (`develop`) |
-| `codespec` | 基于 OpenSpec 的研发流：探索 → 提案 → 实现 → 测试 → 归档 | 需全局安装 `codespec` CLI | [CodeSpec](https://github.com/LinYang-github/CodeSpec) (`codespec-plugin`) |
+| 插件名称 | 插件标识 | 功能简介 | 前置依赖 | 源码仓库 |
+| :--- | :--- | :--- | :--- | :--- |
+| 团队研发规范 | `team-standards` | 团队编码规范与 Git 分支、提交、推送门禁 | 无 | [team-agent-skills](https://github.com/LinYang-github/team-agent-skills) (`develop`) |
+| 规范驱动开发 (CodeSpec) | `codespec` | 基于 OpenSpec 的研发流：探索 → 提案 → 实现 → 测试 → 归档 | 需全局安装 `codespec` CLI | [CodeSpec](https://github.com/LinYang-github/CodeSpec) (`codespec-plugin`) |
 
 ## 快速开始
 
